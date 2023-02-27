@@ -10,6 +10,7 @@ import br.com.pedro.data.vo.v1.PersonVO;
 import br.com.pedro.data.vo.v2.PersonVOV2;
 import br.com.pedro.exceptions.ResourceNotFoundException;
 import br.com.pedro.mapper.DozerMapper;
+import br.com.pedro.mapper.custom.PersonMapper;
 import br.com.pedro.model.Person;
 import br.com.pedro.repositories.PersonRepository;
 
@@ -20,6 +21,9 @@ public class PersonServices {
 	
 	@Autowired
 	PersonRepository repository;
+	
+	@Autowired
+	PersonMapper mapper;
 
 	public List<PersonVO> findAll() {
 
@@ -48,8 +52,8 @@ public class PersonServices {
 	public PersonVOV2 createV2(PersonVOV2 person) {
 
 		logger.info("Creating one person with V2!");
-		var entity = DozerMapper.parseObject(person , Person.class);
-		var vo = DozerMapper.parseObject(repository.save(entity),PersonVOV2.class); 
+		var entity = mapper.convertVoToEntity(person);
+		var vo = mapper.convertEntityToVo(repository.save(entity)); 
 		return vo;
 		
 	}
