@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import br.com.pedro.data.vo.v1.PersonVO;
+import br.com.pedro.data.vo.v2.PersonVOV2;
 import br.com.pedro.exceptions.ResourceNotFoundException;
 import br.com.pedro.mapper.DozerMapper;
 import br.com.pedro.model.Person;
@@ -41,6 +42,14 @@ public class PersonServices {
 		logger.info("Creating one person!");
 		var entity = DozerMapper.parseObject(person , Person.class);
 		var vo = DozerMapper.parseObject(repository.save(entity),PersonVO.class); 
+		return vo;
+		
+	}
+	public PersonVOV2 createV2(PersonVOV2 person) {
+
+		logger.info("Creating one person with V2!");
+		var entity = DozerMapper.parseObject(person , Person.class);
+		var vo = DozerMapper.parseObject(repository.save(entity),PersonVOV2.class); 
 		return vo;
 		
 	}
